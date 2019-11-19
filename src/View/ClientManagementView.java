@@ -11,22 +11,70 @@ import java.awt.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ClientManagementView.
+ * @author Vaibhav V. Jadhav
+ * @version 1.0
+ * @since November 18, 2019
+ */
 public class ClientManagementView extends JFrame {
+    
+    /** The search results. */
     private JLabel appLabel, leftPanelLabel, rightPanelLabel, searchTypeLabel,
     searchOptionLabel, searchResults;
+    
+    /** The search button. */
     private JButton searchButton;
+    
+    /** The clear search button. */
     private JButton clearSearchButton;
+    
+    /** The save button. */
     private JButton saveButton;
+    
+    /** The delete button. */
     private JButton deleteButton;
+    
+    /** The clear info button. */
     private JButton clearInfoButton;
+    
+    /** The add new button. */
     private JButton addNewButton;
+    
+    /** The client type radio. */
     private JRadioButton clientIdRadio, lNameRadio, clientTypeRadio;
-    private JTextField inputSearchText, idText, fNameText, lNameText, addressText;
+    
+    /** The input search text. */
+    private JTextField inputSearchText;
+    
+    /** The id text. */
+    private JTextField idText;
+    
+    /** The name text. */
+    private JTextField fNameText;
+    
+    /** The l name text. */
+    private JTextField lNameText;
+    
+    /** The address text. */
+    private JTextField addressText;
+    
+    /** The zip text. */
     private JFormattedTextField phoneText, zipText;
+    
+    /** The client type combo box. */
     private JComboBox clientTypeComboBox;
+    
+    /** The search result list. */
     private JList searchResultList;
+    
+    /** The button group. */
     private ButtonGroup buttonGroup;
 
+    /**
+     * Instantiates a new client management view.
+     */
     public ClientManagementView() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
@@ -38,6 +86,12 @@ public class ClientManagementView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Creates the child panels.
+     *
+     * @param mainPanel the main panel
+     * @param constraints the constraints
+     */
     public void createChildPanels(JPanel mainPanel, GridBagConstraints constraints) {
         appLabel = new JLabel("Client Management System");
         constraints.gridx = 0;
@@ -61,6 +115,12 @@ public class ClientManagementView extends JFrame {
         populateRightSide(mainPanel, constraints);
     }
 
+    /**
+     * Populate left side.
+     *
+     * @param mainPanel the main panel
+     * @param constraints the constraints
+     */
     public void populateLeftSide(JPanel mainPanel, GridBagConstraints constraints) {
         JPanel leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -109,6 +169,12 @@ public class ClientManagementView extends JFrame {
         mainPanel.add(leftPanel, constraints);
     }
 
+    /**
+     * Populate below left side.
+     *
+     * @param mainPanel the main panel
+     * @param constraints the constraints
+     */
     public void populateBelowLeftSide(JPanel mainPanel, GridBagConstraints constraints) {
         JPanel leftBelowPanel = new JPanel(new GridBagLayout());
         leftBelowPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -129,6 +195,12 @@ public class ClientManagementView extends JFrame {
         mainPanel.add(leftBelowPanel, constraints);
     }
 
+    /**
+     * Populate right side.
+     *
+     * @param mainPanel the main panel
+     * @param constraints the constraints
+     */
     public void populateRightSide(JPanel mainPanel, GridBagConstraints constraints) {
         JPanel rightPanel = new JPanel(new GridBagLayout());
         rightPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -197,6 +269,18 @@ public class ClientManagementView extends JFrame {
         mainPanel.add(rightPanel, constraints);
     }
 
+    /**
+     * Sets the label and text.
+     *
+     * @param labelName the label name
+     * @param textField the text field
+     * @param x1 the x 1
+     * @param y1 the y 1
+     * @param x2 the x 2
+     * @param y2 the y 2
+     * @param childConstraints the child constraints
+     * @param rightPanel the right panel
+     */
     public void setLabelAndText(String labelName, JTextField textField, int x1, int y1, int x2, int y2, GridBagConstraints childConstraints, JPanel rightPanel) {
         JLabel idLabel = new JLabel(labelName);
         childConstraints.gridx = x1;
@@ -207,6 +291,11 @@ public class ClientManagementView extends JFrame {
         rightPanel.add(textField, childConstraints);
     }
 
+    /**
+     * Sets the client data.
+     *
+     * @param list the new client data
+     */
     public void setClientData(ArrayList<ClientManagementModel> list) {
         searchResultList.setListData(list.toArray());
         searchResultList.addListSelectionListener(new ListSelectionListener() {
@@ -219,6 +308,12 @@ public class ClientManagementView extends JFrame {
         });
     }
 
+    /**
+     * Fill right side data.
+     *
+     * @param model the model
+     * @param index the index
+     */
     public void fillRightSideData(ArrayList<ClientManagementModel> model, int index) {
         for(int i = 0; i < model.size(); i++) {
             if(index == i) {
@@ -234,12 +329,21 @@ public class ClientManagementView extends JFrame {
         }
     }
 
+    /**
+     * Clear search criteria.
+     */
     public void clearSearchCriteria() {
         inputSearchText.setText("");
         buttonGroup.clearSelection();
         searchResultList.setListData(new ArrayList<ClientManagementModel>().toArray());
     }
 
+    /**
+     * Gets the client data.
+     *
+     * @param model the model
+     * @return the client data
+     */
     public ClientManagementModel getClientData(ClientManagementModel model) {
         if(idText.getText() != null && !idText.getText().equals("")) {
             model.setId(Integer.parseInt(idText.getText()));
@@ -253,6 +357,9 @@ public class ClientManagementView extends JFrame {
         return model;
     }
 
+    /**
+     * Clear right side data.
+     */
     public void clearRightSideData() {
         idText.setText("");
         fNameText.setText("");
@@ -263,51 +370,146 @@ public class ClientManagementView extends JFrame {
         clientTypeComboBox.setSelectedIndex(0);
     }
 
-    public int getClientToBeDeleted() {
-        return Integer.parseInt(idText.getText());
+    /**
+     * Show message.
+     *
+     * @param message the message
+     */
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
 
+    /**
+     * Gets the client to be deleted.
+     *
+     * @return the client to be deleted
+     */
+    public int getClientToBeDeleted() {
+        try {
+            return Integer.parseInt(idText.getText());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input");
+        }
+        return 0;
+    }
+
+    /**
+     * Sets the j list.
+     *
+     * @param list the new j list
+     */
     public void setJList(ArrayList<ClientManagementModel> list) {
         searchResultList.setListData(list.toArray());
     }
 
+    /**
+     * Gets the search button.
+     *
+     * @return the search button
+     */
     public JButton getSearchButton() {
         return searchButton;
     }
 
+    /**
+     * Gets the clear search button.
+     *
+     * @return the clear search button
+     */
     public JButton getClearSearchButton() {
         return clearSearchButton;
     }
 
+    /**
+     * Gets the client id radio.
+     *
+     * @return the client id radio
+     */
     public JRadioButton getClientIdRadio() {
         return clientIdRadio;
     }
 
+    /**
+     * Gets the l name radio.
+     *
+     * @return the l name radio
+     */
     public JRadioButton getlNameRadio() {
         return lNameRadio;
     }
 
+    /**
+     * Gets the client type radio.
+     *
+     * @return the client type radio
+     */
     public JRadioButton getClientTypeRadio() {
         return clientTypeRadio;
     }
 
+    /**
+     * Gets the input search text.
+     *
+     * @return the input search text
+     */
     public JTextField getInputSearchText() {
         return inputSearchText;
     }
 
+    /**
+     * Gets the adds the new button.
+     *
+     * @return the adds the new button
+     */
     public JButton getAddNewButton() {
         return addNewButton;
     }
 
+    /**
+     * Gets the save button.
+     *
+     * @return the save button
+     */
     public JButton getSaveButton() {
         return saveButton;
     }
 
+    /**
+     * Gets the delete button.
+     *
+     * @return the delete button
+     */
     public JButton getDeleteButton() {
         return deleteButton;
     }
 
+    /**
+     * Gets the clear info button.
+     *
+     * @return the clear info button
+     */
     public JButton getClearInfoButton() {
         return clearInfoButton;
     }
+
+    /**
+     * Gets the f name text.
+     *
+     * @return the f name text
+     */
+    public JTextField getfNameText() { return fNameText; }
+
+    /**
+     * Gets the l name text.
+     *
+     * @return the l name text
+     */
+    public JTextField getlNameText() { return lNameText; }
+
+    /**
+     * Gets the address text.
+     *
+     * @return the address text
+     */
+    public JTextField getAddressText() { return addressText; }
 }
